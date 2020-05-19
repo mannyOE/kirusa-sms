@@ -91,33 +91,33 @@ Kirusa.prototype.send_multiple = function (message, phone_numbers) {
   if (format.valid.length === 0) {
     throw Error('Invalid phone numbers provided')
   }
-  var options = {
-    uri: `https://konnect.kirusa.com/api/v1/Accounts/${this.ACCOUNT_ID}/Messages`,
-    body: {
-      to: format.valid,
-      body: message,
-      sender_mask: this.mask,
-      from: this.NUMBER,
-      id: this.ACCOUNT_ID,
-    },
-    headers: {
-      Authorization: this.API_KEY,
-      'Content-Type': 'application/json',
-    },
-    json: true, // Automatically parses the JSON string in the response
+  try {
+     var options = {
+          uri: `https://konnect.kirusa.com/api/v1/Accounts/${this.ACCOUNT_ID}/Messages`,
+          body: {
+            to: format.valid,
+            body: message,
+            sender_mask: this.mask,
+            from: this.NUMBER,
+            id: this.ACCOUNT_ID,
+          },
+          headers: {
+            Authorization: this.API_KEY,
+            'Content-Type': 'application/json',
+          },
+          json: true, // Automatically parses the JSON string in the response
+        }
+      
+           var response = await Request.post(options)
+           return {
+                response: response.data,
+                invalid_phone_numbers: format.invalid,
+              }
+  } catch (error) {
+       throw Error(err)
+       
   }
-
-  Request(options)
-    .then(function (response) {
-      return {
-        response: response.data,
-        invalid_phone_numbers: format.invalid,
-      }
-    })
-    .catch(function (err) {
-      // API call failed...
-      throw Error(err)
-    })
+   
 }
 
 var kirusa = new Kirusa(
