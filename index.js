@@ -120,13 +120,4 @@ Kirusa.prototype.send_multiple = function (message, phone_numbers) {
    
 }
 
-var kirusa = new Kirusa(
-  'DfIa2O8IZ0gjlSKMzz7HAiE+K64OUiUycO+2lY1pc3E=',
-  'lZSSiHfoMyV0PSt67TKTSA==',
-  '53245',
-  '+234'
-)
-
-// console.log(
-//   kirusa.send_single('slow down Nester. I am not chasing you', '+2348138641965')
-// )
+module.exports = Kirusa;
